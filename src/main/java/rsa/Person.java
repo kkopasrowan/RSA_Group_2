@@ -2,12 +2,12 @@ package rsa;
 
 import java.util.Arrays;
 import java.util.Random;
-import java.util.Stack;
 
 public class Person {
-	private long m;
-	private long e;
-	private long d;
+	private static final int bytesPacked = 4;
+	private final long m;
+	private final long e;
+	private final long d;
 
 	public Person() {
 		Random random = new Random();
@@ -28,11 +28,33 @@ public class Person {
 	}
 
 	public long[] encryptTo(String msg, Person other) {
-		return null;
+		byte[] plaintext = msg.getBytes();
+		long[] encrypted = new long[(msg.length() + (bytesPacked - 1)) / bytesPacked];
+		for(int i = 0; i < plaintext.length; i++) {
+			encrypted[i / bytesPacked] |= plaintext[i] << (i % bytesPacked) * Byte.SIZE;
+		}
+
+		for(int i = 0; i < encrypted.length; i++) {
+			encrypted[i] = RSA.modPower(encrypted[i], other.getE(), other.getM());
+		}
+
+		return encrypted;
 	}
 
 	public String decrypt(long[] cipher) {
-		return "";
+		long[] encrypted = Arrays.copyOf(cipher,cipher.length);
+		for(int i = 0; i < cipher.length; i++) {
+			encrypted[i] = RSA.modPower(encrypted[i], d, m);
+		}
+
+		StringBuilder builder = new StringBuilder(cipher.length * bytesPacked);
+		for(int i = 0; i < cipher.length * bytesPacked; i++) {
+			char c = (char) (encrypted[i / bytesPacked] & (0xFFFF << i % bytesPacked ));
+			if(c != 0)
+				builder.append(c);
+		}
+
+		return builder.toString();
 	}
 
 	private static long extendedEuclidean(long x, long y) {
