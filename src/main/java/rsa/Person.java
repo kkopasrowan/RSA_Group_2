@@ -5,18 +5,19 @@ import java.util.Random;
 
 public class Person {
 	private static final int bytesPacked = 4;
+	private static final long MAX_PRIME = 997;
 	private final long m;
 	private final long e;
 	private final long d;
 
 	public Person() {
 		Random random = new Random();
-		long p = RSA.randPrime(1, Integer.MAX_VALUE, random);
-		long q = RSA.randPrime(1, Integer.MAX_VALUE, random);
+		long p = RSA.randomPrime(1L, MAX_PRIME);
+		long q = RSA.randomPrime(1L, MAX_PRIME);
 		m = p * q;
 		long N = (p - 1) * (q - 1);
-		e = RSA.relPrime(N, random);
-		d = RSA.extendedEuclidean(e, N);
+		e = RSA.relativePrime(N);
+		d = RSA.inverse(e, N);
 	}
 
 	public long getM() {

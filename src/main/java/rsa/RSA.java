@@ -25,6 +25,20 @@ public class RSA {
         return result; 
     }
 
+    public static long randomPrime(long min, long max){
+        return 0L; 
+    }
+
+    public static long relativePrime(long N){
+        return 0L;
+    }
+
+    /**
+     * @author Keegan Kopas
+     * @param a
+     * @param b
+     * @return
+     */
     public static long gcd(long a, long b){
         long result = a % b; 
          while(result != 0) {
