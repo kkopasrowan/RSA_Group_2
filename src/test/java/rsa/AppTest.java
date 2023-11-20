@@ -13,8 +13,13 @@ public class AppTest
      * Rigorous Test :-)
      */
     @Test
-    public void shouldAnswerWithTrue()
+    public void modPowerTest()
     {
-        assertTrue( true );
+        assertTrue( RSA.modPower(4, 13, 497) == 445 );
+    }
+
+    @Test
+    public void extendedEuclideanTest(){
+        assertTrue(RSA.inverse(5L, 39L) == 8L);
     }
 }
