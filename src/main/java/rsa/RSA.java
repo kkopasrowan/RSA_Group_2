@@ -53,6 +53,9 @@ public class RSA {
         return true; 
     }
 
+    /**
+     * @author Keegan Kopas
+     */
     public static long relativePrime(long N){
         long relativePrimeCandidate; 
         do {
