@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class Person {
-	/** 
 	private static final int bytesPacked = 4;
 	private final long m;
 	private final long e;
@@ -58,5 +57,4 @@ public class Person {
 		return builder.toString();
 	}
 
-	*/
 }
