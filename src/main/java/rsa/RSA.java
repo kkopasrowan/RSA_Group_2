@@ -3,9 +3,10 @@ package rsa;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
+import java.util.Random;
 
 public class RSA {    
-
+    private static final Random PRIMEGENERATOR = new Random(); 
     /**
      * @author Keegan Kopas
 =     * @return
@@ -25,8 +26,30 @@ public class RSA {
         return result; 
     }
 
+    /**
+     * @author Keegan Kopas
+     * @param min
+     * @param max
+     * @return
+     */
     public static long randomPrime(long min, long max){
-        return 0L; 
+        long nextPrime;
+        do{
+            nextPrime = (PRIMEGENERATOR.nextLong() * (max - min)) + min; 
+        } while (!isPrime(nextPrime));
+        return nextPrime; 
+    }
+
+    /**
+     * @author Keegan Kopas
+     * @param randomNumber
+     * @return
+     */
+    private static boolean isPrime(long randomNumber){
+        for(long i = randomNumber / 2; i > 0; i-- ){
+            if (randomNumber % i == 0 ) return false;
+        }
+        return true; 
     }
 
     public static long relativePrime(long N){
