@@ -25,6 +25,16 @@ public class RSA {
         return result; 
     }
 
+    public static long gcd(long a, long b){
+        long result = a % b; 
+         while(result != 0) {
+            a = b;
+            b = result; 
+            // The following reassignments will be esentially pointless if result = 09 
+            result = a % b; 
+        }
+        return b;
+    }
 
     /**
      * @author James Blake, refactored by Keegan Kopas

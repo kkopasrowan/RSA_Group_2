@@ -22,4 +22,9 @@ public class AppTest
     public void extendedEuclideanTest(){
         assertTrue(RSA.inverse(5L, 39L) == 8L);
     }
+
+    @Test
+    public void gcdTest(){
+        assertTrue(RSA.gcd(18, 12) == 6);
+    }
 }
