@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Random;
 
 public class RSA {    
-    private static final Random PRIMEGENERATOR = new Random(); 
+    private static final Random RNG = new Random(); 
     /**
      * @author Keegan Kopas
 =     * @return
@@ -35,7 +35,7 @@ public class RSA {
     public static long randomPrime(long min, long max){
         long nextPrime;
         do{
-            nextPrime = (PRIMEGENERATOR.nextLong() * (max - min)) + min; 
+            nextPrime = (((RNG.nextLong() * ((max/2) - min)) + min) * 2) -1; 
         } while (!isPrime(nextPrime));
         return nextPrime; 
     }
@@ -46,15 +46,20 @@ public class RSA {
      * @return
      */
     private static boolean isPrime(long randomNumber){
-        for(long i = randomNumber / 2; i > 0; i-- ){
+        if (randomNumber % 2 == 0) return false;  
+        for(long i = 3; i*i > randomNumber; i = i + 2){
             if (randomNumber % i == 0 ) return false;
         }
         return true; 
     }
 
     public static long relativePrime(long N){
-        return 0L;
-    }
+        long relativePrimeCandidate; 
+        do {
+            relativePrimeCandidate = Math.abs(RNG.nextLong());
+        } while(gcd(relativePrimeCandidate, N) != 0);
+        return relativePrimeCandidate; 
+    } 
 
     /**
      * @author Keegan Kopas
