@@ -35,7 +35,7 @@ public class RSA {
     public static long randomPrime(long min, long max){
         long nextPrime;
         do{
-            nextPrime = (((RNG.nextLong() * ((max/2) - min)) + min) * 2) -1; 
+            nextPrime = RNG.nextLong(min, max + 1); 
         } while (!isPrime(nextPrime));
         return nextPrime; 
     }
@@ -45,7 +45,7 @@ public class RSA {
      * @param randomNumber
      * @return
      */
-    private static boolean isPrime(long randomNumber){
+    public static boolean isPrime(long randomNumber){
         if (randomNumber % 2 == 0) return false;  
         for(long i = 3; i*i > randomNumber; i = i + 2){
             if (randomNumber % i == 0 ) return false;
@@ -59,8 +59,8 @@ public class RSA {
     public static long relativePrime(long N){
         long relativePrimeCandidate; 
         do {
-            relativePrimeCandidate = Math.abs(RNG.nextLong());
-        } while(gcd(relativePrimeCandidate, N) != 0);
+            relativePrimeCandidate = Math.abs(RNG.nextLong(0, N));
+        } while(gcd(relativePrimeCandidate, N) != 1);
         return relativePrimeCandidate; 
     } 
 
