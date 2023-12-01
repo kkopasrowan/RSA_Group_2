@@ -8,44 +8,36 @@ import java.util.Random;
 public class RSA {    
     private static final Random RNG = new Random(); 
 
+    /**
+     * @author Christian Walddman. 
+     * @param args
+     */
     public static void main (String args[])
     { 	
-        //Person Jerry = new Person(); 
-        //Person Kramer = new Person(); 
+        Person Kassem = new Person(); 
+        Person Elaine = new Person(); 
 
-        //String jerrysMessage = "ABC";
-         
+        String soupOrder = "You look exactly like Al Pacino.";
+        System.out.println("Elaine's message:" + soupOrder);
+        long[] cipher = Elaine.encryptTo(soupOrder, Kassem);
+        System.out.println("Elaine sends: " + cipherString(cipher));
 
-        Person Alice = new Person();
-        Person Bob = new Person();
-    
-        String msg = new String ("Bob, let's have lunch."); 	// message to be sent to Bob
-        long []  cipher;
-        cipher =  Alice.encryptTo(msg, Bob);			// encrypted, with Bob's public key
-    
-        System.out.println ("Message is: " + msg);
-        System.out.println ("Alice sends:");
-        show (cipher);
-    
-        System.out.println ("Bob decodes and reads: " + Bob.decrypt (cipher));	// decrypted,
-                                    // with Bob's private key.
-        System.out.println ();
-    
-        msg = new String ("No thanks, I'm busy");
-        cipher = Bob.encryptTo (msg, Alice);
+        System.out.println("Kassem decrypts: " + Kassem.decrypt(cipher));
+
+        String noSoup = "No soup for you.";
+        System.out.println("Kassem's message:" + noSoup);
+        cipher = Kassem.encryptTo(noSoup, Elaine);
+        System.out.println("Kassem sends: " + cipherString(cipher));
+
+        System.out.println("Elaine decrypts: " + Elaine.decrypt(cipher));
         
-        System.out.println ("Message is: " + msg);
-        System.out.println ("Bob sends:");
-        show (cipher);
-    
-        System.out.println ("Alice decodes and reads: " + Alice.decrypt (cipher));
     }
 
     /**
      * @author James Blake and Keegan Kopas
      * @param cipher
      */
-    public static void show(long[] cipher){ 
+    public static String cipherString(long[] cipher){ 
 		StringBuilder builder = new StringBuilder(cipher.length * Person.bytesPacked);
 		for(int i = 0; i < cipher.length * Person.bytesPacked; i++) {
 			char c = (char) (cipher[i / Person.bytesPacked] & (0xFFFF << i % Person.bytesPacked ));
@@ -53,12 +45,12 @@ public class RSA {
 				builder.append(c);
 		}
 
-		System.out.println( builder.toString());
+		return builder.toString();
     }
 
 
     /**
-     * @author Keegan Kopas and Christian Waldmann
+     * @author Keegan Kopas
 =     * @return
      */
     public static long modPower(long base, long  power, long mod){
@@ -77,7 +69,7 @@ public class RSA {
     }
 
     /**
-     * @author Keegan Kopas
+     * @author Keegan Kopas and Christian Walddman
      * @param min
      * @param max
      * @return
