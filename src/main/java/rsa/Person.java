@@ -10,6 +10,9 @@ public class Person {
 	private final long e;
 	private final long d;
 
+	/**
+	 * @author James Blake
+	 */
 	public Person() {
 		Random random = new Random();
 		long p = RSA.randomPrime(1L, MAX_PRIME);
@@ -20,14 +23,24 @@ public class Person {
 		d = RSA.inverse(e, N);
 	}
 
+	/**
+	 * @author James Blake
+	 */
 	public long getM() {
 		return m;
 	}
 
+
+	/**
+	 * @author James Blake
+	 */
 	public long getE() {
 		return e;
 	}
 
+	/**
+	 * @author James Blake
+	 */
 	public long[] encryptTo(String msg, Person other) {
 		byte[] plaintext = msg.getBytes();
 		long[] encrypted = new long[(msg.length() + (bytesPacked - 1)) / bytesPacked];
@@ -42,6 +55,9 @@ public class Person {
 		return encrypted;
 	}
 
+	/**
+	 * @author James Blake
+	 */
 	public String decrypt(long[] cipher) {
 		long[] encrypted = Arrays.copyOf(cipher,cipher.length);
 		for(int i = 0; i < cipher.length; i++) {

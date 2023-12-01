@@ -53,7 +53,7 @@ public class RSA {
 
 
     /**
-     * @author Keegan Kopas
+     * @author Keegan Kopas and Christian Waldmann
 =     * @return
      */
     public static long modPower(long base, long  power, long mod){
@@ -99,7 +99,7 @@ public class RSA {
     }
 
     /**
-     * @author Keegan Kopas
+     * @author Keegan Kopas and Christian Waldmann
      */
     public static long relativePrime(long N){
         long relativePrimeCandidate; 
