@@ -11,7 +11,7 @@ public class Person {
 	private final long d;
 
 	/**
-	 * @author James Blake and Christian Waldmann
+	 * @author James Blake 
 	 */
 	public Person() {
 		Random random = new Random();
@@ -56,7 +56,7 @@ public class Person {
 	}
 
 	/**
-	 * @author James Blake and Christian Waldmann
+	 * @author James Blake 
 	 */
 	public String decrypt(long[] cipher) {
 		long[] encrypted = Arrays.copyOf(cipher,cipher.length);
