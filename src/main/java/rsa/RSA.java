@@ -8,7 +8,10 @@ import java.util.Random;
 public class RSA {    
     private static final Random RNG = new Random(); 
 
-
+    /**
+     * @author Christian Waldmann
+     * @param args
+     */
     public static void main (String args[])
     { 	
         Person Alice = new Person();

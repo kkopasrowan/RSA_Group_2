@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class Person {
-	public static final int bytesPacked = 4;
+	public static final int bytesPacked = 1;
 	private static final long MAX_PRIME = 997;
 	private final long m;
 	private final long e;
