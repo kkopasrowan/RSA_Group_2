@@ -99,7 +99,7 @@ public class RSA {
     }
 
     /**
-     * @author Keegan Kopas and Christian Waldmann
+     * @author Keegan Kopas 
      */
     public static long relativePrime(long N){
         long relativePrimeCandidate; 
