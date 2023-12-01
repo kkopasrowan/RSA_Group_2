@@ -4,8 +4,8 @@ import java.util.Arrays;
 
 public class Person {
 	/// Max of 3, otherwise you might get overflow
-	public static final int bytesPacked = 3;
-	public static final long MIN_PRIME = 0xFF;
+	public static final int bytesPacked = 1;
+	public static final long MIN_PRIME = 0xFFF;
 	private static final long MAX_PRIME = 0xFFFF;
 	private final long m;
 	private final long e;

@@ -89,7 +89,7 @@ public class RSA {
      */
     public static boolean isPrime(long randomNumber){
         if (randomNumber % 2 == 0) return false;  
-        for(long i = 3; i <= randomNumber; i++){
+        for(long i = 3; i*i <= randomNumber; i = i + 2){
             if (randomNumber % i == 0 ) return false;
         }
         return true; 
