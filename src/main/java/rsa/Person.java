@@ -1,11 +1,12 @@
 package rsa;
 
 import java.util.Arrays;
-import java.util.Random;
 
 public class Person {
-	public static final int bytesPacked = 1;
-	private static final long MAX_PRIME = 997;
+	/// Max of 3, otherwise you might get overflow
+	public static final int bytesPacked = 3;
+	public static final long MIN_PRIME = 0xFF;
+	private static final long MAX_PRIME = 0xFFFF;
 	private final long m;
 	private final long e;
 	private final long d;
@@ -14,9 +15,8 @@ public class Person {
 	 * @author James Blake 
 	 */
 	public Person() {
-		Random random = new Random();
-		long p = RSA.randomPrime(1L, MAX_PRIME);
-		long q = RSA.randomPrime(1L, MAX_PRIME);
+		long p = RSA.randomPrime(MIN_PRIME, MAX_PRIME);
+		long q = RSA.randomPrime(MIN_PRIME, MAX_PRIME);
 		m = p * q;
 		long N = (p - 1) * (q - 1);
 		e = RSA.relativePrime(N);
@@ -66,7 +66,10 @@ public class Person {
 
 		StringBuilder builder = new StringBuilder(cipher.length * bytesPacked);
 		for(int i = 0; i < cipher.length * bytesPacked; i++) {
-			char c = (char) (encrypted[i / bytesPacked] & (0xFFFF << i % bytesPacked ));
+			long value = encrypted[i / bytesPacked];
+			int mask = 0xFF << (i % bytesPacked) * Byte.SIZE;
+			long result = (value & mask) >> (i % bytesPacked) * Byte.SIZE;
+			char c = (char) result;
 			if(c != 0)
 				builder.append(c);
 		}
