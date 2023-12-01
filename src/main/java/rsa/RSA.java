@@ -92,7 +92,7 @@ public class RSA {
      */
     public static boolean isPrime(long randomNumber){
         if (randomNumber % 2 == 0) return false;  
-        for(long i = 3; i*i > randomNumber; i = i + 2){
+        for(long i = 3; i*i < randomNumber; i = i + 2){
             if (randomNumber % i == 0 ) return false;
         }
         return true; 
@@ -120,7 +120,6 @@ public class RSA {
          while(result != 0) {
             a = b;
             b = result; 
-            // The following reassignments will be esentially pointless if result = 09 
             result = a % b; 
         }
         return b;
