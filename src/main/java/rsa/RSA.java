@@ -7,6 +7,51 @@ import java.util.Random;
 
 public class RSA {    
     private static final Random RNG = new Random(); 
+
+
+    public static void main (String args[])
+    { 	
+        Person Alice = new Person();
+        Person Bob = new Person();
+    
+        String msg = new String ("Bob, let's have lunch."); 	// message to be sent to Bob
+        long []  cipher;
+        cipher =  Alice.encryptTo(msg, Bob);			// encrypted, with Bob's public key
+    
+        System.out.println ("Message is: " + msg);
+        System.out.println ("Alice sends:");
+        show (cipher);
+    
+        System.out.println ("Bob decodes and reads: " + Bob.decrypt (cipher));	// decrypted,
+                                    // with Bob's private key.
+        System.out.println ();
+    
+        msg = new String ("No thanks, I'm busy");
+        cipher = Bob.encryptTo (msg, Alice);
+        
+        System.out.println ("Message is: " + msg);
+        System.out.println ("Bob sends:");
+        show (cipher);
+    
+        System.out.println ("Alice decodes and reads: " + Alice.decrypt (cipher));
+    }
+
+    /**
+     * @author James Blake and Keegan Kopas
+     * @param cipher
+     */
+    public static void show(long[] cipher){ 
+		StringBuilder builder = new StringBuilder(cipher.length * Person.bytesPacked);
+		for(int i = 0; i < cipher.length * Person.bytesPacked; i++) {
+			char c = (char) (cipher[i / Person.bytesPacked] & (0xFFFF << i % Person.bytesPacked ));
+			if(c != 0)
+				builder.append(c);
+		}
+
+		System.out.println( builder.toString());
+    }
+
+
     /**
      * @author Keegan Kopas
 =     * @return
