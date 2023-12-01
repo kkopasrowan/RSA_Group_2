@@ -21,8 +21,11 @@ public class AppTest
     }
 
     @Test
-    public void extendedEuclideanTest(){
+    public void inverseTest(){
         assertTrue(RSA.inverse(5L, 39L) == 8L);
+        assertTrue(RSA.inverse(5L, 33L) == 20L);
+        assertTrue(RSA.inverse(70L, 99L) == 58L);
+
     }
 
     @Test
@@ -37,12 +40,17 @@ public class AppTest
         long testPrime = 13;
 
         assertTrue(RSA.isPrime(testPrime));
-   
+
+        testPrime = 7;
+
+        assertTrue(RSA.isPrime(testPrime));
     }
 
     @Test
     public void testIsNotPrime(){
         long testNotPrime = 14; 
+        assertTrue(!RSA.isPrime(testNotPrime));
+        testNotPrime = 777; 
         assertTrue(!RSA.isPrime(testNotPrime));
     }
 
@@ -52,10 +60,20 @@ public class AppTest
         long testNum = 999;
         long relPrime = RSA.relativePrime(testNum); 
         assertTrue(RSA.gcd(relPrime, testNum) == 1);
+
+        testNum = 575;
+        relPrime = RSA.relativePrime(testNum); 
+        assertTrue(RSA.gcd(relPrime, testNum) == 1);
+
+        testNum = 651;
+        relPrime = RSA.relativePrime(testNum); 
+        assertTrue(RSA.gcd(relPrime, testNum) == 1);
+
     }
 
     @Test
     public void gcdTest(){
         assertTrue(RSA.gcd(18, 12) == 6);
+        assertTrue(RSA.gcd(75, 15) == 15);
     }
 }

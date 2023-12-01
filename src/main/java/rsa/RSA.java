@@ -8,12 +8,14 @@ import java.util.Random;
 public class RSA {    
     private static final Random RNG = new Random(); 
 
-    /**
-     * @author Christian Waldmann
-     * @param args
-     */
     public static void main (String args[])
     { 	
+        //Person Jerry = new Person(); 
+        //Person Kramer = new Person(); 
+
+        //String jerrysMessage = "ABC";
+         
+
         Person Alice = new Person();
         Person Bob = new Person();
     
@@ -129,38 +131,30 @@ public class RSA {
     }
 
     /**
-     * @author James Blake, refactored by Keegan Kopas
+     * @author James Blake
      * @return
      */
     public static long inverse(long x, long y) {
-        ArrayList<Long> r = new ArrayList<Long>(Arrays.asList(y, x)); 
-        ArrayList<Long> u = new ArrayList<Long>(Arrays.asList(0L,1L)); 
-        ArrayList<Long> v = new ArrayList<Long>(Arrays.asList(1L, 0L)); 
+        int q = 0; int r = 1; int u = 2; int v = 3;
+		// An array to store q, r, u, and v for the extended Euclidean algorithm.
+		long[][] qruv = new long[][] {
+				{0, y, 0, 1},
+				{0, x, 1, 0},
+				{0, 0, 0, 0}
+		};
 
-        long r_i = -1; 
-        long u_result = -1; 
-        long q = 0; 
-        for(int i = 2; r_i != 1L; i++){
-            q = r.get(i -2) / r.get(i- 1);
+		do {
+			qruv[2][q] = qruv[0][r] / qruv[1][r];					// Q = R-2 / R-1
+			qruv[2][r] = qruv[0][r] % qruv[1][r];					// R = R-2 % R-1
+			qruv[2][u] = qruv[0][u] - (qruv[2][q] * qruv[1][u]);	// U = U-2 - (Q * U-1)
+			qruv[2][v] = qruv[0][v] - (qruv[2][q] * qruv[1][v]);	// V = V-2 - (Q * V-1)
+			qruv[0] = Arrays.copyOf(qruv[1], 4);
+			qruv[1] = Arrays.copyOf(qruv[2], 4);
+		} while(qruv[1][r] != 1);	// R != 1
 
-            r_i = r.get(i - 2).longValue() % r.get(i - 1).longValue();
-            r.add(r_i);
+		if(qruv[1][u] < 0)
+			qruv[1][u] = y + qruv[1][u];
 
-            Long u_i = u.get(i -2) - (q * u.get(i - 1));
-            u.add(u_i);
-            
-            Long v_i = v.get(i - 2) - (q * v.get(i - 1));
-            v.add(v_i);
-
-            Long r_check = u.get(i) * x + v.get(i) * y; 
-
-            if (r.get(i) != r_check) {System.err.println("Checksum doesn't match!");}
-            if (r_i ==  1L) {
-                u_result = u_i;
-                break; 
-            } 
-        }
-        if (u_result < 0L ) u_result += y; 
-        return u_result;   
+		return qruv[1][u];
 	}
 }
